@@ -1,5 +1,7 @@
 package com.pauu.javase.string;
 
+import java.util.Scanner;
+
 public class StringDemo {
 	public static void main(String[] args) {
 		// String s1 = new String();
@@ -113,20 +115,67 @@ public class StringDemo {
 		// String newStr = s.substring(0,
 		// 1).toUpperCase().concat(s.substring(1).toLowerCase());
 		// System.out.println(newStr);
-		String s1 = "helloworld";
-		String s2 = s1.replace('l', 'k');
-		System.out.println("s1:"+s1+",s2:"+s2);
-		String s3 = s1.replace("owo", "ak47");
-		System.out.println("s3:"+s3);
-		String s4 = " hello world ";
-		String s5 = s4.trim();
-		System.out.println("s4:"+s4+",s5:"+s5);
-		String s6 = "hello";
-		String s7 = "hello";
-		String s8 = "abc";
-		String s9 = "xyz";
-		System.out.println(s6.compareTo(s7));//0
-		System.out.println(s6.compareTo(s8));//7
-		System.out.println(s6.compareTo(s9));//-16
+		// String s1 = "helloworld";
+		// String s2 = s1.replace('l', 'k');
+		// System.out.println("s1:" + s1 + ",s2:" + s2);
+		// String s3 = s1.replace("owo", "ak47");
+		// System.out.println("s3:" + s3);
+		// String s4 = " hello world ";
+		// String s5 = s4.trim();
+		// System.out.println("s4:" + s4 + ",s5:" + s5);
+		// String s6 = "hello";
+		// String s7 = "hello";
+		// String s8 = "abc";
+		// String s9 = "xyz";
+		// System.out.println(s6.compareTo(s7));// 0
+		// System.out.println(s6.compareTo(s8));// 7
+		// System.out.println(s6.compareTo(s9));// -16
+		// int[] arr = { 1, 2, 3 };
+		// String s = arrayToString(arr);
+		// System.out.println(s);
+		// System.out.println("--------------------");
+		// Scanner sc = new Scanner(System.in);
+		// System.out.println("请输入一个字符串");
+		// String str = sc.nextLine();
+		// String newStr = reverseString(str);
+		// System.out.println("逆序的字符串为：" + newStr);
+		// System.out.println("----------------------");
+		String longStr = "javaodfsfjavaheloafdsajlkjljavauorerjavaorewrjavaoerejavajava";
+		String shortStr = "java";
+		int count = occurCount(longStr, shortStr);
+		System.out.println("出现了" + count + "次");
+	}
+
+	private static int occurCount(String longStr, String shortStr) {
+		int count = 0;
+		int index;
+		while ((index = longStr.indexOf(shortStr)) != -1) {
+			count++;
+			longStr = longStr.substring(index + shortStr.length());
+		}
+		return count;
+	}
+
+	private static String reverseString(String str) {
+		char[] chs = new char[str.length()];
+		for (int i = 0; i < str.length(); i++) {
+			chs[i] = str.charAt(str.length() - i - 1);
+		}
+		String newStr = String.valueOf(chs);
+		return newStr;
+	}
+
+	private static String arrayToString(int[] arr) {
+		String s = "";
+		for (int i = 0; i < arr.length; i++) {
+			if (i == 0) {
+				s = s + "[" + arr[i] + ", ";
+			} else if (i == arr.length - 1) {
+				s = s + arr[i] + "]";
+			} else {
+				s = s + arr[i] + ", ";
+			}
+		}
+		return s;
 	}
 }
