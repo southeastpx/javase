@@ -30,9 +30,26 @@ public class StringDemo {
 		// String s = "hello";
 		// s += "world";
 		// System.out.println("s"+s);
-		String s1 = new String("hello");
+		// String s1 = new String("hello");
+		// String s2 = "hello";
+		// System.out.println(s1 == s2);//false
+		// System.out.println(s1.equals(s2));//true
+		// String s1 = "hello";
+		// String s2 = "world";
+		// String s3 = "helloworld";
+		// System.out.println(s3 == (s1+s2));//false
+		// System.out.println(s3 == ("hello"+"world"));//true,编译器会做优化
+		String s1 = "hello";
 		String s2 = "hello";
-		System.out.println(s1 == s2);//false
+		String s3 = "HelLo";
 		System.out.println(s1.equals(s2));//true
+		System.out.println(s1.equals(s3));//false
+		System.out.println(s1.equalsIgnoreCase(s3));//true
+		System.out.println(s1.contains("el"));//true
+		System.out.println(s1.startsWith("he"));//true
+		System.out.println(s1.startsWith("el"));//false
+		System.out.println(s1.endsWith("dd"));//false
+		System.out.println(s1.endsWith("lo"));//true
+		System.out.println(s1.isEmpty());//false
 	}
 }
