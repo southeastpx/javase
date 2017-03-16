@@ -1,0 +1,4 @@
+#Thu Mar 16 09:34:40 CST 2017
+zhangsan=30
+lisi=100
+wangwu=50
