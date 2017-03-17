@@ -6,6 +6,12 @@ import org.junit.Test;
 
 public class TestBuffer {
 	@Test
+	public void test3() {
+		ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+		System.out.println(buf.isDirect());
+	}
+
+	@Test
 	public void test2() {
 		ByteBuffer buf = ByteBuffer.allocate(1024);
 		buf.put("abcde".getBytes());
