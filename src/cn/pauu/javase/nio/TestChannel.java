@@ -3,12 +3,21 @@ package cn.pauu.javase.nio;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -16,6 +25,52 @@ import org.junit.Test;
  * 需求：利用通道和缓冲区复制文件
  */
 public class TestChannel {
+	// Charset字符集
+	@Test
+	public void test6() throws IOException {
+		Charset cs1 = Charset.forName("UTF-8");
+		Charset cs2 = Charset.forName("UTF-8");
+		CharBuffer cBuf = CharBuffer.allocate(1024);
+		cBuf.put("中国好棒！");
+		cBuf.flip();
+		System.out.println("1==" + cBuf.toString());
+		ByteBuffer bBuf = cs1.encode(cBuf);
+		System.out.println("2==" + new String(bBuf.array(), 0, bBuf.limit(), cs1));
+		CharBuffer cBuf2 = cs2.decode(bBuf);
+		System.out.println("3==" + cBuf2.toString());
+	}
+
+	@Test
+	public void test5() {
+		Map<String, Charset> map = Charset.availableCharsets();
+		Set<Entry<String, Charset>> set = map.entrySet();
+		for (Entry<String, Charset> entry : set) {
+			System.out.println(entry.getKey() + "==" + entry.getValue());
+		}
+	}
+
+	// 分散读取与聚集写入
+	@Test
+	public void test4() throws IOException {
+		RandomAccessFile raf1 = new RandomAccessFile("CopyMp4Demo3.java", "rw");
+		FileChannel channel = raf1.getChannel();
+		ByteBuffer buf1 = ByteBuffer.allocate(100);
+		ByteBuffer buf2 = ByteBuffer.allocate(1024);
+		ByteBuffer[] bufs = { buf1, buf2 };
+		channel.read(bufs);
+		for (ByteBuffer buf : bufs) {
+			buf.flip();
+		}
+		System.out.println(new String(bufs[0].array(), 0, bufs[0].limit()));
+		System.out.println("-----------------------");
+		System.out.println(new String(bufs[1].array(), 0, bufs[1].limit()));
+		RandomAccessFile raf2 = new RandomAccessFile("channel.txt", "rw");
+		FileChannel channel2 = raf2.getChannel();
+		channel2.write(bufs);
+		channel.close();
+		channel2.close();
+	}
+
 	// 直接缓冲区(简化版)
 	@Test
 	public void test3() throws IOException {
