@@ -1,13 +1,6 @@
 package cn.pauu.javase.thread;
 
-public class MyThread extends Thread {
-	public MyThread() {
-	}
-
-	public MyThread(String name) {
-		super(name);
-	}
-
+public class ThreadDaemon extends Thread {
 	@Override
 	public void run() {
 		for (int x = 0; x < 200; x++) {
