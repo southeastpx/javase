@@ -13,6 +13,8 @@ public class ClientDemo {
 		Socket s = new Socket("127.0.0.1", 9999);
 		OutputStream os = s.getOutputStream();
 		os.write("今天天气不错，适合睡觉".getBytes());
+		// 告诉服务器，数据发送完毕
+		s.shutdownOutput();
 		InputStream is = s.getInputStream();
 		int len = 0;
 		byte[] bys = new byte[1024];

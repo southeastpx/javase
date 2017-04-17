@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -20,6 +21,11 @@ public class UploadServer {
 			bw.newLine();
 			bw.flush();
 		}
+		// 给客户端反馈
+		BufferedWriter bwServer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+		bwServer.write("文件上传成功");
+		bwServer.newLine();
+		bwServer.flush();
 		bw.close();
 		s.close();
 	}

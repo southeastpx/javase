@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
@@ -21,6 +22,12 @@ public class UploadClient {
 			bw.newLine();
 			bw.flush();
 		}
+		// 告诉服务器数据发送完了
+		s.shutdownOutput();
+		// 接收服务器的反馈
+		BufferedReader brClient = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		String message = brClient.readLine();
+		System.out.println(message);
 		br.close();
 		s.close();
 	}
