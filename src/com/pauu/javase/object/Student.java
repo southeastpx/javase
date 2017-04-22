@@ -4,6 +4,10 @@ public class Student {
 	private String name;
 	private int age;
 
+	private Student(String name) {
+		this.name = name;
+	}
+
 	public Student(String name, int age) {
 		super();
 		this.name = name;
@@ -28,6 +32,22 @@ public class Student {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	private void function() {
+		System.out.println("function");
+	}
+
+	public void show() {
+		System.out.println("show");
+	}
+
+	public void method(String str) {
+		System.out.println("method " + str);
+	}
+
+	public String getString(String str, int i) {
+		return str + i;
 	}
 
 	@Override
