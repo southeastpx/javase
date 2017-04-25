@@ -1,8 +1,10 @@
 package cn.pauu.javase.nio;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -13,6 +15,31 @@ import java.nio.file.StandardOpenOption;
 import org.junit.Test;
 
 public class TestChannel2 {
+
+	/*
+	 * 分散读取和聚集写入
+	 */
+	@Test
+	public void test4() throws IOException {
+		// 分散读取
+		RandomAccessFile raf1 = new RandomAccessFile("CopyStream.java", "rw");
+		FileChannel channel = raf1.getChannel();
+		ByteBuffer buf1 = ByteBuffer.allocate(100);
+		ByteBuffer buf2 = ByteBuffer.allocate(1024);
+		ByteBuffer[] bufs = { buf1, buf2 };
+		channel.read(bufs);
+		for (ByteBuffer buf : bufs) {
+			buf.flip();
+		}
+		System.out.println(new String(bufs[0].array(), 0, bufs[0].limit()));
+		System.out.println("-----------------------------");
+		System.out.println(new String(bufs[1].array(), 0, bufs[1].limit()));
+		// 聚集写入
+		RandomAccessFile raf2 = new RandomAccessFile("ppp.java", "rw");
+		FileChannel channel2 = raf2.getChannel();
+		channel2.write(bufs);
+	}
+
 	/*
 	 * 通道前的数据传输
 	 */
