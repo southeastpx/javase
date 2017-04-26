@@ -5,15 +5,48 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.Test;
 
 public class TestChannel2 {
+
+	/*
+	 * ±‡¬ÎCharSet
+	 */
+	@Test
+	public void test5() throws IOException {
+		Map<String, Charset> map = Charset.availableCharsets();
+		Set<Entry<String, Charset>> entrySet = map.entrySet();
+		for (Entry<String, Charset> entry : entrySet) {
+			//System.out.println(entry.getKey() + "=" + entry.getValue());
+		}
+
+		Charset cs1 = Charset.forName("GBK");
+		CharsetEncoder ce = cs1.newEncoder();
+		CharsetDecoder cd = cs1.newDecoder();
+		CharBuffer cBuf = CharBuffer.allocate(1024);
+		cBuf.put("…–πËπ»Õ˛Œ‰£°");
+		cBuf.flip();
+		ByteBuffer bBuf = ce.encode(cBuf);
+		for (int x = 0; x < bBuf.limit(); x++) {
+			System.out.println(bBuf.get());
+		}
+		bBuf.flip();
+		CharBuffer cBuf2 = cd.decode(bBuf);
+		System.out.println(cBuf2.toString());
+	}
 
 	/*
 	 * ∑÷…¢∂¡»°∫Õæ€ºØ–¥»Î
